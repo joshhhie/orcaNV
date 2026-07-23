@@ -2,8 +2,8 @@
 <div align="center">A free and open-source Roblox script hub</div>
 <br>
 <div align="center">
-	<a href="https://github.com/richie0866/orca/actions"><img src="https://github.com/richie0866/orca/actions/workflows/eslint.yaml/badge.svg" alt="ESLint Status" /></a>
-	<a href="https://github.com/richie0866/orca/releases/latest"><img src="https://img.shields.io/github/v/release/richie0866/orca?include_prereleases" alt="Latest Release" /></a>
+	<a href="https://github.com/joshhhie/orcaNV/actions"><img src="https://github.com/richie0866/orca/actions/workflows/eslint.yaml/badge.svg" alt="ESLint Status" /></a>
+	<a href="https://github.com/joshhhie/orcaNV/releases/latest"><img src="https://img.shields.io/github/v/release/richie0866/orca?include_prereleases" alt="Latest Release" /></a>
 </div>
 <div>&nbsp;</div>
 
@@ -11,7 +11,7 @@
 
 **Orca** is a **general-purpose** Roblox script hub designed to make convenient tasks **easy** and **satisfying**.
 
-Use many different **action cards** on the [**Home**](https://github.com/richie0866/orca#house-home) and [**Apps**](https://github.com/richie0866/orca#iphone-apps) page, or check out what we have featured on the [**Scripts**](https://github.com/richie0866/orca#newspaper-scripts) page.
+Use many different **action cards** on the [**Home**](https://github.com/joshhhie/orcaNV#house-home) and [**Apps**](https://github.com/joshhhie/orcaNV#iphone-apps) page, browse tabbed **Commands** on [**Options**](https://github.com/joshhhie/orcaNV#gear-options), or check out featured scripts on the [**Scripts**](https://github.com/joshhhie/orcaNV#newspaper-scripts) page.
 
 Press `K` to open or close Orca. For the best experience, a 1080p monitor or above is recommended!
 
@@ -23,7 +23,17 @@ When run with auto-execution, Orca will start minimized by default.
 
 ### :pushpin: Latest release
 
-Runs the latest release build of Orca.
+Runs the latest release build of Orca from **joshhhie/orcaNV**.
+
+```lua
+loadstring(
+  game:HttpGetAsync("https://raw.githubusercontent.com/joshhhie/orcaNV/main/public/latest.lua")
+)()
+```
+
+### :construction: Upstream (richie0866/orca)
+
+Original upstream build.
 
 ```lua
 loadstring(
@@ -37,7 +47,7 @@ Runs a snapshot of new updates we have not published yet. You will get new featu
 
 ```lua
 loadstring(
-  game:HttpGetAsync("https://raw.githubusercontent.com/richie0866/orca/master/public/snapshot.lua")
+  game:HttpGetAsync("https://raw.githubusercontent.com/joshhhie/orcaNV/main/public/snapshot.lua")
 )()
 ```
 
@@ -71,24 +81,46 @@ The **Apps** page acts as a hub for general and miscellaneous features.
 
 ### :newspaper: Scripts
 
-The **Scripts** page is a small collection of community-favorites you should try.
+The **Scripts** page is a collection of community-favorites and showcases you should try.
 
-- :books: **Solaris** - https://solarishub.dev
-- :books: **V.G Hub** - https://github.com/1201for
-- :books: **EvoV2** - https://projectevo.xyz
+**Showcases (default cards):**
+
+- :books: **Vape V4** - Bedwars-focused client with tabbed modules
+
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/joshhhie/vapeNV/main/NewMainScript.lua", true))()
+```
+
+- :whale2: **Orca** - This script hub
+
+```lua
+loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/joshhhie/orcaNV/main/public/latest.lua"))()
+```
+
+**Community scripts:**
+
 - :shield: **CMD-X** - https://github.com/CMD-X
 - :shield: **Infinite Yield** - https://github.com/EdgeIY
 - :mag_right: **Dex Explorer** - https://github.com/LorekeeperZinnia
 - :mag_right: **Unnamed ESP** - https://github.com/ic3w0lf22
+- :books: **EvoV2** - https://projectevo.xyz
 
 ### :gear: Options
 
-The **Options** page lets you configure theming and UI performance.
+The **Options** page lets you configure theming, shortcuts, and commands.
 
- - [x] Set theme
- - [ ] Toggle acrylic effect
- - [ ] Keybinds
- - [ ] Save settings
+- :keyboard: **Commands** - Tabbed, collapsible sections (animated with Flipper springs) listing actions you can run:
+
+  - **Character** - Refresh, ghost, godmode, freecam, flight, walk speed, jump height
+  - **Server** - Rejoin or switch server
+  - **Scripts** - One-tap loadstring for Vape V4, Orca, Infinite Yield, CMD-X
+  - **Settings** - Acrylic background blur toggle
+
+  Tap a section header to collapse or expand it. Add more entries in `src/views/Pages/Options/Commands/registry.ts`.
+
+- :keyboard: **Shortcuts** - Keybind configuration
+
+- :art: **Themes** - Set theme
 
 &nbsp;
 

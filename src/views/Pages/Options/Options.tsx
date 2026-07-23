@@ -3,7 +3,7 @@ import { pure } from "@rbxts/roact-hooked";
 import Canvas from "components/Canvas";
 import { useScale } from "hooks/use-scale";
 import { scale } from "utils/udim2";
-import Config from "./Config";
+import Commands from "./Commands";
 import Shortcuts from "./Shortcuts";
 import Themes from "./Themes";
 
@@ -13,7 +13,7 @@ function Options() {
 	return (
 		<Canvas position={scale(0, 1)} anchor={new Vector2(0, 1)}>
 			<uiscale Scale={scaleFactor} />
-			<Config />
+			<Commands />
 			<Themes />
 			<Shortcuts />
 		</Canvas>

@@ -1,31 +1,23 @@
 import Roact from "@rbxts/roact";
 import { pure } from "@rbxts/roact-hooked";
 import Canvas from "components/Canvas";
-import * as http from "utils/http";
+import { runScriptFromUrl } from "utils/run-script";
 import { scale } from "utils/udim2";
 import { BASE_PADDING, BASE_WINDOW_HEIGHT } from "views/Pages/Scripts/constants";
 import Content from "views/Pages/Scripts/Content";
 import ScriptCard from "views/Pages/Scripts/ScriptCard";
 
-async function runScriptFromUrl(url: string, src: string) {
-	try {
-		const content = await http.get(url);
-		const [fn, err] = loadstring(content, "@" + src);
-		assert(fn, `Failed to call loadstring on Lua script from '${url}': ${err}`);
-		task.defer(fn);
-	} catch (e) {
-		warn(`Failed to run Lua script from '${url}': ${e}`);
-		return "";
-	}
-}
-
 function Scripts() {
 	return (
 		<Canvas position={scale(0, 1)} anchor={new Vector2(0, 1)}>
-			{/* Solaris Hub */}
 			<ScriptCard
-				onActivate={() => runScriptFromUrl("https://solarishub.dev/script.lua", "Solaris")}
-				index={4}
+				onActivate={() =>
+					runScriptFromUrl(
+						"https://raw.githubusercontent.com/joshhhie/vapeNV/main/NewMainScript.lua",
+						"VapeV4",
+					)
+				}
+				index={0}
 				backgroundImage="rbxassetid://8992292705"
 				backgroundImageSize={new Vector2(1023, 682)}
 				dropshadow="rbxassetid://8992292536"
@@ -42,13 +34,15 @@ function Scripts() {
 				}
 				position={scale(0, 0)}
 			>
-				<Content header="Solaris" body="A collection\nof your favorite\nscripts." footer="solarishub.dev" />
+				<Content header="Vape V4" body="Bedwars & more\nwith tabbed\nmodules." footer="joshhhie/vapeNV" />
 			</ScriptCard>
 
-			{/* V.G Hub */}
 			<ScriptCard
 				onActivate={() =>
-					runScriptFromUrl("https://raw.githubusercontent.com/1201for/V.G-Hub/main/V.Ghub", "V.G Hub")
+					runScriptFromUrl(
+						"https://raw.githubusercontent.com/joshhhie/orcaNV/main/public/latest.lua",
+						"Orca",
+					)
 				}
 				index={1}
 				backgroundImage="rbxassetid://8992292381"
@@ -67,7 +61,7 @@ function Scripts() {
 				}
 				position={scale(0, 1)}
 			>
-				<Content header="V.G Hub" body="Featuring over\n100 games." footer="github.com/1201for" />
+				<Content header="Orca" body="Script hub with\ntabbed commands\nand actions." footer="joshhhie/orcaNV" />
 			</ScriptCard>
 
 			{/* CMD-X */}
