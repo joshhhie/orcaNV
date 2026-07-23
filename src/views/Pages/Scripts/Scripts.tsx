@@ -40,7 +40,7 @@ function Scripts() {
 			<ScriptCard
 				onActivate={() =>
 					runScriptFromUrl(
-						"https://raw.githubusercontent.com/joshhhie/orcaNV/main/public/latest.lua",
+						"https://raw.githubusercontent.com/joshhhie/orcaNV/master/public/latest.lua",
 						"Orca",
 					)
 				}

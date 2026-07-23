@@ -125,7 +125,7 @@ export const COMMAND_SECTIONS: CommandSection[] = [
 				label: "Orca",
 				hint: "<font face='GothamBlack'>Load Orca</font> from joshhhie/orcaNV",
 				kind: "script",
-				url: "https://raw.githubusercontent.com/joshhhie/orcaNV/main/public/latest.lua",
+				url: "https://raw.githubusercontent.com/joshhhie/orcaNV/master/public/latest.lua",
 				src: "Orca",
 			},
 			{

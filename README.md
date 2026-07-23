@@ -27,7 +27,7 @@ Runs the latest release build of Orca from **joshhhie/orcaNV**.
 
 ```lua
 loadstring(
-  game:HttpGetAsync("https://raw.githubusercontent.com/joshhhie/orcaNV/main/public/latest.lua")
+  game:HttpGetAsync("https://raw.githubusercontent.com/joshhhie/orcaNV/master/public/latest.lua")
 )()
 ```
 
@@ -47,7 +47,7 @@ Runs a snapshot of new updates we have not published yet. You will get new featu
 
 ```lua
 loadstring(
-  game:HttpGetAsync("https://raw.githubusercontent.com/joshhhie/orcaNV/main/public/snapshot.lua")
+  game:HttpGetAsync("https://raw.githubusercontent.com/joshhhie/orcaNV/master/public/snapshot.lua")
 )()
 ```
 
@@ -94,7 +94,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/joshhhie/vapeNV/main/
 - :whale2: **Orca** - This script hub
 
 ```lua
-loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/joshhhie/orcaNV/main/public/latest.lua"))()
+loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/joshhhie/orcaNV/master/public/latest.lua"))()
 ```
 
 **Community scripts:**
