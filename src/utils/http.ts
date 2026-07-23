@@ -1,27 +1,14 @@
-import { HttpService } from "@rbxts/services";
-import { IS_DEV } from "constants";
-
-export async function request(requestOptions: RequestAsyncRequest): Promise<RequestAsyncResponse> {
-	if (IS_DEV) {
-		return HttpService.RequestAsync(requestOptions);
-	} else {
-		const fn = syn ? syn.request : request;
-		if (!fn) {
-			throw "request/syn.request is not available";
-		}
-		return fn(requestOptions);
-	}
+interface ExploitGame {
+	HttpGet(url: string, nocache?: boolean): string;
+	HttpPost(url: string, data: string, contentType?: string, nocache?: boolean): string;
 }
 
-export async function get(url: string, requestType?: Enum.HttpRequestType): Promise<string> {
-	return game.HttpGetAsync(url, requestType);
+const exploitGame = game as unknown as ExploitGame;
+
+export function get(url: string): string {
+	return exploitGame.HttpGet(url, true);
 }
 
-export async function post(
-	url: string,
-	data: string,
-	contentType?: string,
-	requestType?: Enum.HttpRequestType,
-): Promise<string> {
-	return game.HttpPostAsync(url, data, contentType, requestType);
+export function post(url: string, data: string, contentType?: string): string {
+	return exploitGame.HttpPost(url, data, contentType, true);
 }

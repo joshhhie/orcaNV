@@ -19,7 +19,7 @@ async function onServerHop() {
 	queueExecution();
 
 	const servers = HttpService.JSONDecode(
-		await http.get(`https://games.roblox.com/v1/games/${game.PlaceId}/servers/Public?sortOrder=Asc&limit=100`),
+		http.get(`https://games.roblox.com/v1/games/${game.PlaceId}/servers/Public?sortOrder=Asc&limit=100`),
 	) as GameServersResponse;
 
 	const serversAvailable = servers.data.filter(
@@ -47,8 +47,8 @@ async function onRejoin() {
 function queueExecution() {
 	const isRelease = VERSION.match("^.+%..+%..+$") !== undefined;
 	const code = isRelease
-		? 'loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/richie0866/orca/master/public/latest.lua"))()'
-		: 'loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/richie0866/orca/master/public/snapshot.lua"))()';
+		? 'loadstring(game:HttpGet("https://raw.githubusercontent.com/joshhhie/orcaNV/master/public/latest.lua", true))()'
+		: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/joshhhie/orcaNV/master/public/snapshot.lua", true))()';
 
 	(syn?.queue_on_teleport ?? queue_on_teleport)?.(code);
 }

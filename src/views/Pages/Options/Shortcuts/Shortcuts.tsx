@@ -20,7 +20,7 @@ function Shortcuts() {
 	const [selectedItem, setSelectedItem] = useState<string | undefined>(undefined);
 
 	return (
-		<Card index={1} page={DashboardPage.Options} theme={theme} size={px(326, 184)} position={new UDim2(0, 0, 1, -416 - 48)}>
+		<Card index={1} page={DashboardPage.Options} theme={theme} size={px(326, 416)} position={new UDim2(0, 0, 1, 0)}>
 			<textlabel
 				Text="Shortcuts"
 				Font="GothamBlack"
@@ -31,7 +31,7 @@ function Shortcuts() {
 				Position={px(24, 24)}
 				BackgroundTransparency={1}
 			/>
-			<Canvas size={px(326, 116)} position={px(0, 68)} padding={{ left: 24, right: 24, top: 8 }} clipsDescendants>
+			<Canvas size={px(326, 348)} position={px(0, 68)} padding={{ left: 24, right: 24, top: 8 }} clipsDescendants>
 				<scrollingframe
 					Size={scale(1, 1)}
 					CanvasSize={px(0, ENTRY_COUNT * (ENTRY_HEIGHT + PADDING) + PADDING)}

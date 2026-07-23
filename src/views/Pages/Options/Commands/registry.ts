@@ -89,6 +89,7 @@ export const COMMAND_SECTIONS: CommandSection[] = [
 	{
 		id: "server",
 		title: "Server",
+		defaultOpen: true,
 		entries: [
 			{
 				id: "rejoinServer",
@@ -109,8 +110,48 @@ export const COMMAND_SECTIONS: CommandSection[] = [
 		],
 	},
 	{
+		id: "players",
+		title: "Players",
+		defaultOpen: true,
+		entries: [
+			{
+				id: "teleport",
+				label: "Goto player",
+				hint: "<font face='GothamBlack'>Move to</font> the selected player. Tap again to cancel.",
+				kind: "job",
+				job: "teleport",
+				canDeactivate: true,
+			},
+			{
+				id: "hide",
+				label: "Hide player",
+				hint: "<font face='GothamBlack'>Hide</font> the selected player locally",
+				kind: "job",
+				job: "hide",
+				canDeactivate: true,
+			},
+			{
+				id: "kill",
+				label: "Kill player",
+				hint: "<font face='GothamBlack'>Kill</font> the selected player",
+				kind: "job",
+				job: "kill",
+				canDeactivate: true,
+			},
+			{
+				id: "spectate",
+				label: "Spectate player",
+				hint: "<font face='GothamBlack'>Spectate</font> the selected player",
+				kind: "job",
+				job: "spectate",
+				canDeactivate: true,
+			},
+		],
+	},
+	{
 		id: "scripts",
 		title: "Scripts",
+		defaultOpen: true,
 		entries: [
 			{
 				id: "vape",
