@@ -12,13 +12,14 @@ import { useSpring } from "hooks/common/use-spring";
 import { useIsPageOpen } from "hooks/use-current-page";
 import { DashboardPage } from "store/models/dashboard.model";
 import { ViewTheme } from "themes/theme.interface";
+import { BindingOrValue } from "utils/binding-util";
 import { px } from "utils/udim2";
 
 interface Props extends Roact.PropsWithChildren {
 	index: number;
 	page: DashboardPage;
 	theme: ViewTheme;
-	size: UDim2;
+	size: BindingOrValue<UDim2>;
 	position: UDim2;
 }
 
@@ -26,9 +27,11 @@ function Card({ index, page, theme, size, position, [Roact.Children]: children }
 	const isOpen = useIsPageOpen(page);
 	const isActive = useDelayedUpdate(isOpen, index * 40);
 
+	const width = typeIs(size, "UDim2") ? size.X.Offset : 326;
+
 	const positionWhenHidden = new UDim2(new UDim(), position.Y)
-		.sub(px((size.X.Offset + 48) * 2 - position.X.Offset, 0))
-		.sub(px(size.X.Offset + 48 * 2, 0));
+		.sub(px((width + 48) * 2 - position.X.Offset, 0))
+		.sub(px(width + 48 * 2, 0));
 
 	return (
 		<Canvas

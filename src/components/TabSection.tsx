@@ -1,12 +1,12 @@
 import Roact from "@rbxts/roact";
 import { pure, useState } from "@rbxts/roact-hooked";
 import Canvas from "components/Canvas";
+import Icon from "components/Icon";
 import { useSpring } from "hooks/common/use-spring";
 import { ViewTheme } from "themes/theme.interface";
-import { px, scale } from "utils/udim2";
+import { px } from "utils/udim2";
 
-export const TAB_HEADER_HEIGHT = 44;
-export const TAB_SECTION_PADDING = 8;
+export const TAB_HEADER_HEIGHT = 48;
 
 interface Props extends Roact.PropsWithChildren {
 	title: string;
@@ -20,7 +20,6 @@ interface Props extends Roact.PropsWithChildren {
 function TabSection({ title, open, onToggle, contentHeight, theme, layoutOrder, [Roact.Children]: children }: Props) {
 	const [hovered, setHovered] = useState(false);
 	const totalHeight = TAB_HEADER_HEIGHT + (open ? contentHeight : 0);
-	const chevron = useSpring(open ? 0 : -90, {});
 
 	return (
 		<frame
@@ -43,24 +42,21 @@ function TabSection({ title, open, onToggle, contentHeight, theme, layoutOrder, 
 				<textlabel
 					Text={title}
 					Font="GothamBold"
-					TextSize={14}
+					TextSize={15}
 					TextColor3={theme.foreground}
-					TextTransparency={useSpring(hovered ? 0 : 0.25, {})}
+					TextTransparency={useSpring(hovered ? 0 : 0.2, {})}
 					TextXAlignment="Left"
 					TextYAlignment="Center"
-					Size={new UDim2(1, -28, 1, 0)}
-					Position={px(0, 0)}
+					Size={new UDim2(1, -36, 1, 0)}
+					Position={px(28, 0)}
 					BackgroundTransparency={1}
 				/>
-				<imagelabel
-					Image="rbxassetid://8992244380"
-					ImageColor3={theme.foreground}
-					ImageTransparency={useSpring(hovered ? 0.25 : 0.5, {})}
-					Rotation={chevron}
-					Size={px(12, 12)}
-					Position={new UDim2(1, -16, 0.5, 0)}
-					AnchorPoint={new Vector2(0.5, 0.5)}
-					BackgroundTransparency={1}
+				<Icon
+					id={open ? "caretDown" : "caretRight"}
+					color={theme.foreground}
+					size={20}
+					position={px(4, 14)}
+					transparency={useSpring(hovered ? 0.15 : 0.4, {})}
 				/>
 			</textbutton>
 

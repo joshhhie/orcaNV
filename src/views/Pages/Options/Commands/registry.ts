@@ -1,9 +1,20 @@
 import { TAB_HEADER_HEIGHT } from "components/TabSection";
 import { JobsState } from "store/models/jobs.model";
+import { JobsWithValue } from "store/models/jobs.model";
 import { OptionsState } from "store/models/options.model";
 
-export const COMMAND_PADDING = 12;
-export const COMMAND_HEIGHT = 48;
+export const COMMAND_PADDING = 10;
+export const COMMAND_ROW_HEIGHT = 56;
+export const COMMAND_EXPAND_HEIGHT = 52;
+export const COMMAND_SEARCH_HEIGHT = 44;
+
+export interface CommandValueField {
+	job: keyof JobsWithValue<number>;
+	min: number;
+	max: number;
+	units: string;
+	hint: string;
+}
 
 export interface CommandEntry {
 	id: string;
@@ -15,6 +26,7 @@ export interface CommandEntry {
 	url?: string;
 	src?: string;
 	canDeactivate?: boolean;
+	value?: CommandValueField;
 }
 
 export interface CommandSection {
@@ -67,6 +79,13 @@ export const COMMAND_SECTIONS: CommandSection[] = [
 				kind: "job",
 				job: "flight",
 				canDeactivate: true,
+				value: {
+					job: "flight",
+					min: 10,
+					max: 100,
+					units: "studs/s",
+					hint: "<font face='GothamBlack'>Configure flight</font> speed in studs per second",
+				},
 			},
 			{
 				id: "walkSpeed",
@@ -75,6 +94,13 @@ export const COMMAND_SECTIONS: CommandSection[] = [
 				kind: "job",
 				job: "walkSpeed",
 				canDeactivate: true,
+				value: {
+					job: "walkSpeed",
+					min: 0,
+					max: 100,
+					units: "studs/s",
+					hint: "<font face='GothamBlack'>Configure speed</font> in studs per second",
+				},
 			},
 			{
 				id: "jumpHeight",
@@ -83,6 +109,13 @@ export const COMMAND_SECTIONS: CommandSection[] = [
 				kind: "job",
 				job: "jumpHeight",
 				canDeactivate: true,
+				value: {
+					job: "jumpHeight",
+					min: 0,
+					max: 500,
+					units: "studs",
+					hint: "<font face='GothamBlack'>Configure height</font> in studs",
+				},
 			},
 		],
 	},
@@ -202,10 +235,46 @@ export const COMMAND_SECTIONS: CommandSection[] = [
 	},
 ];
 
-export function sectionContentHeight(entryCount: number) {
-	return entryCount * (COMMAND_HEIGHT + COMMAND_PADDING) + COMMAND_PADDING;
+export function entryHeight(entry: CommandEntry, expanded: boolean) {
+	return COMMAND_ROW_HEIGHT + (expanded && entry.value !== undefined ? COMMAND_EXPAND_HEIGHT : 0);
 }
 
-export function sectionTotalHeight(section: CommandSection, open: boolean) {
-	return TAB_HEADER_HEIGHT + (open ? sectionContentHeight(section.entries.size()) : 0);
+export function sectionContentHeight(entries: CommandEntry[], expandedEntries: Record<string, boolean>) {
+	let total = COMMAND_PADDING;
+	for (const entry of entries) {
+		total += entryHeight(entry, expandedEntries[entry.id] ?? false) + COMMAND_PADDING;
+	}
+	return total;
+}
+
+export function sectionTotalHeight(
+	section: CommandSection,
+	open: boolean,
+	expandedEntries: Record<string, boolean>,
+) {
+	return TAB_HEADER_HEIGHT + (open ? sectionContentHeight(section.entries, expandedEntries) : 0);
+}
+
+export function shortcutId(entryId: string) {
+	return `cmd_${entryId}`;
+}
+
+export function filterSections(sections: CommandSection[], query: string) {
+	const q = query.lower();
+	if (q === "") {
+		return sections;
+	}
+	const filtered: CommandSection[] = [];
+	for (const section of sections) {
+		const entries = section.entries.filter((entry) => {
+			return (
+				string.find(entry.label.lower(), q, 1, true)[0] !== undefined ||
+				string.find(section.title.lower(), q, 1, true)[0] !== undefined
+			);
+		});
+		if (entries.size() > 0) {
+			filtered.push({ ...section, entries });
+		}
+	}
+	return filtered;
 }
