@@ -6,10 +6,12 @@ import { IS_DEV } from "constants";
 import { setStore } from "jobs";
 import { toggleDashboard } from "store/actions/dashboard.action";
 import { configureStore } from "store/store";
+import { preloadIcons } from "utils/icons";
 import App from "./App";
 
 const store = configureStore();
 setStore(store);
+preloadIcons();
 
 /**
  * Mounts the app and retrieve the UI instance.

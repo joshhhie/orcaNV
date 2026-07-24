@@ -1,43 +1,46 @@
-import * as http from "utils/http";
+import { ICON_IDS, ICON_PNG } from "utils/icon-data";
 
-const PHOSPHOR = "https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/regular";
-
-export const ICON_URLS = {
-	caretDown: `${PHOSPHOR}/caret-down.svg`,
-	caretRight: `${PHOSPHOR}/caret-right.svg`,
-	caretUp: `${PHOSPHOR}/caret-up.svg`,
-	magnifyingGlass: `${PHOSPHOR}/magnifying-glass.svg`,
-	keyboard: `${PHOSPHOR}/keyboard.svg`,
-	gear: `${PHOSPHOR}/gear.svg`,
-	sliders: `${PHOSPHOR}/sliders-horizontal.svg`,
-	dotsThree: `${PHOSPHOR}/dots-three-vertical.svg`,
-} as const;
-
-export type IconId = keyof typeof ICON_URLS;
+export type IconId = (typeof ICON_IDS)[number];
 
 const cache = new Map<string, string>();
 
+function ensure_dirs() {
+	if (makefolder === undefined || isfolder === undefined) {
+		return;
+	}
+	if (!isfolder("_orca")) {
+		makefolder("_orca");
+	}
+	if (!isfolder("_orca/icons")) {
+		makefolder("_orca/icons");
+	}
+}
+
 export function getIcon(id: IconId): string {
-	const cached = cache.get(id);
-	if (cached !== undefined) {
-		return cached;
+	const hit = cache.get(id);
+	if (hit !== undefined) {
+		return hit;
 	}
 
-	const url = ICON_URLS[id];
-	const path = `_orca/icons/${id}.svg`;
-
-	if (getcustomasset !== undefined && writefile !== undefined && isfile !== undefined) {
-		if (makefolder !== undefined && isfolder !== undefined && !isfolder("_orca/icons")) {
-			makefolder("_orca/icons");
-		}
-		if (!isfile(path)) {
-			writefile(path, http.get(url));
-		}
-		const asset = getcustomasset(path);
-		cache.set(id, asset);
-		return asset;
+	if (getcustomasset === undefined || writefile === undefined || isfile === undefined || base64_decode === undefined) {
+		warn(`[orca/icons] getcustomasset pipeline unavailable (${id})`);
+		return "";
 	}
 
-	cache.set(id, url);
-	return url;
+	ensure_dirs();
+
+	const file = `_orca/icons/${id}.png`;
+	if (!isfile(file)) {
+		writefile(file, base64_decode(ICON_PNG[id]));
+	}
+
+	const asset = getcustomasset(file);
+	cache.set(id, asset);
+	return asset;
+}
+
+export function preloadIcons() {
+	for (const id of ICON_IDS) {
+		getIcon(id);
+	}
 }

@@ -1,5 +1,5 @@
 import Roact from "@rbxts/roact";
-import { pure } from "@rbxts/roact-hooked";
+import { hooked, useEffect, useState } from "@rbxts/roact-hooked";
 import { IconId, getIcon } from "utils/icons";
 import { BindingOrValue } from "utils/binding-util";
 import { px } from "utils/udim2";
@@ -23,9 +23,21 @@ function Icon({
 	transparency = 0,
 	rotation = 0,
 }: Props) {
+	const [image, setImage] = useState(() => getIcon(id));
+
+	useEffect(() => {
+		if (image === "") {
+			setImage(getIcon(id));
+		}
+	}, [id, image]);
+
+	if (image === "") {
+		return <></>;
+	}
+
 	return (
 		<imagelabel
-			Image={getIcon(id)}
+			Image={image}
 			ImageColor3={color}
 			ImageTransparency={transparency}
 			Rotation={rotation}
@@ -33,8 +45,9 @@ function Icon({
 			Position={position}
 			AnchorPoint={anchor}
 			BackgroundTransparency={1}
+			ScaleType="Fit"
 		/>
 	);
 }
 
-export default pure(Icon);
+export default hooked(Icon);
