@@ -4,6 +4,17 @@ import { IconId, getIcon } from "utils/icons";
 import { BindingOrValue } from "utils/binding-util";
 import { px } from "utils/udim2";
 
+const FALLBACK: Record<IconId, string> = {
+	caretDown: "v",
+	caretRight: ">",
+	caretUp: "^",
+	magnifyingGlass: "?",
+	keyboard: "K",
+	gear: "*",
+	sliders: "=",
+	dotsThree: ":",
+};
+
 interface Props {
 	id: IconId;
 	color: BindingOrValue<Color3>;
@@ -26,26 +37,42 @@ function Icon({
 	const [image, setImage] = useState(() => getIcon(id));
 
 	useEffect(() => {
-		if (image === "") {
-			setImage(getIcon(id));
+		const asset = getIcon(id);
+		if (asset !== "" && asset !== image) {
+			setImage(asset);
 		}
-	}, [id, image]);
+	}, [id]);
 
-	if (image === "") {
-		return <></>;
+	if (image !== "") {
+		return (
+			<imagelabel
+				Image={image}
+				ImageColor3={color}
+				ImageTransparency={transparency}
+				Rotation={rotation}
+				Size={px(size, size)}
+				Position={position}
+				AnchorPoint={anchor}
+				BackgroundTransparency={1}
+				ScaleType="Fit"
+			/>
+		);
 	}
 
 	return (
-		<imagelabel
-			Image={image}
-			ImageColor3={color}
-			ImageTransparency={transparency}
+		<textlabel
+			Text={FALLBACK[id]}
+			Font="GothamBold"
+			TextSize={size - 4}
+			TextColor3={color}
+			TextTransparency={transparency}
 			Rotation={rotation}
 			Size={px(size, size)}
 			Position={position}
 			AnchorPoint={anchor}
+			TextXAlignment="Center"
+			TextYAlignment="Center"
 			BackgroundTransparency={1}
-			ScaleType="Fit"
 		/>
 	);
 }

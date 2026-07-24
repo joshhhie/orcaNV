@@ -1,4 +1,4 @@
-import { ICON_IDS, ICON_PNG } from "utils/icon-data";
+import { ICON_IDS, ICON_PNG, ICON_VERSION } from "utils/icon-data";
 
 export type IconId = (typeof ICON_IDS)[number];
 
@@ -13,6 +13,9 @@ function ensure_dirs() {
 	}
 	if (!isfolder("_orca/icons")) {
 		makefolder("_orca/icons");
+	}
+	if (!isfolder(`_orca/icons/${ICON_VERSION}`)) {
+		makefolder(`_orca/icons/${ICON_VERSION}`);
 	}
 }
 
@@ -29,7 +32,7 @@ export function getIcon(id: IconId): string {
 
 	ensure_dirs();
 
-	const file = `_orca/icons/${id}.png`;
+	const file = `_orca/icons/${ICON_VERSION}/${id}.png`;
 	if (!isfile(file)) {
 		writefile(file, base64_decode(ICON_PNG[id]));
 	}
